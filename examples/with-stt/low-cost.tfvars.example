@@ -1,0 +1,6 @@
+# Cheaper profile for short lab sessions:
+# - Service Bus Standard: no private endpoint, so the namespace keeps a public
+#   endpoint (still Entra-only, no SAS keys).
+# - No Azure OpenAI account.
+service_bus_sku       = "Standard"
+summarization_enabled = false
