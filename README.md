@@ -1,8 +1,19 @@
 # terraform-azurerm-ai-stt-batch
 
+[![ci](https://github.com/goosain-platform-lab/terraform-azurerm-ai-stt-batch/actions/workflows/ci.yml/badge.svg)](https://github.com/goosain-platform-lab/terraform-azurerm-ai-stt-batch/actions/workflows/ci.yml)
+
 Terraform module for the **batch side of a speech-to-text workload**: a queue-driven pipeline that transcribes recordings, translates them, summarises them with Azure OpenAI and stores the results. It is **secretless**, like the rest of the lab.
 
 It plugs into the real-time module [terraform-azurerm-ai-stt](https://github.com/goosain-platform-lab/terraform-azurerm-ai-stt). It reuses that module's Speech, Translator, data storage, Key Vault and (optionally) App Service plan, so the two can be released and deployed independently.
+
+## What this demonstrates
+
+- **Event-driven design:** one Service Bus queue per pipeline stage, processed by an isolated .NET Function App.
+- **Module composition:** plugs into the real-time module's `shared_services` output and can share its App Service plan. Its input contract is enforced with cross-variable validation.
+- **Secretless by default:** identity-based Functions host storage and Service Bus trigger, Entra-only SQL, and Speech reads the audio with its own managed identity.
+- **CI quality gates:** `terraform validate` runs against the real-time module at its released tag, plus tflint and Checkov.
+
+**Status:** validated in CI; not deployed, to avoid running costs.
 
 ## What it deploys
 
