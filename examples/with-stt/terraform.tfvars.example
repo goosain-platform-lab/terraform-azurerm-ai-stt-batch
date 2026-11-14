@@ -1,0 +1,25 @@
+# Copy to terraform.tfvars for a local run, or enter these as Terraform
+# variables in the HCP Terraform workspace. Nothing here is a secret.
+
+location = "southafricanorth"
+
+# Entra group whose members administer SQL (object ID from Entra ID > Groups).
+sql_entra_admin = {
+  login_username = "ai-lab-admins"
+  object_id      = "00000000-0000-0000-0000-000000000000"
+}
+
+# Summarisation model. Check the model is available in your region first.
+openai_deployments = {
+  summarize = {
+    model_name    = "gpt-5.1"
+    model_version = "2025-11-13"
+    sku_name      = "GlobalStandard"
+    capacity      = 10
+  }
+}
+
+# Example Key Vault reference (secret added by an operator, see README):
+# key_vault_references = {
+#   "ExternalApi__Key" = "external-api-key"
+# }
